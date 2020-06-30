@@ -1,22 +1,29 @@
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-plt.style.use('ggplot')
+#plt.style.use('ggplot')
 
-def generate_data(num_samples, num_features):
+def generate_data(num_samples, num_coord , num_labels):
     #Randomly generates a number of data points.
-    data_size = (num_samples,num_features)
+    data_size = (num_samples,num_coord)
     data = np.random.randint(0,100, size=data_size)
     labels_size = (num_samples, 1)
-    labels = np.random.randint(0, 2, size=labels_size)
+    labels = np.random.randint(0, num_labels, size=labels_size)
     return data.astype(np.float32), labels
 
-train_data, labels = generate_data(11,2)
+train_data, labels = generate_data(11,2,2)
 
-print(train_data)
-print(labels)
+all_blue = train_data[labels.ravel()==0]
+all_red = train_data[labels.ravel()==1]
+print(all_blue)
 
-plt.plot(train_data[0, 0], train_data[0, 1], 'sb')
-plt.xlabel('x coordinate')
-plt.ylabel('y coordinate')
+plt.scatter(all_blue[:, 0], all_blue[:, 1], c='b', marker='s', s=180)
+plt.scatter(all_red[:, 0], all_red[:, 1], c='r', marker='^', s=180)
+
+plt.xlabel('x coordinate (feature 1)')
+plt.ylabel('y coordinate (feature 2)')
 plt.show()
+
+
+knn = cv2.ml.KNearest_create
+knn.train(train_data, cv2.ml.ROW_SAMPLE, labels)
