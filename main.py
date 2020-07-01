@@ -1,5 +1,5 @@
 import numpy as np
-import cv2
+import cv2 as cv
 import matplotlib.pyplot as plt
 #plt.style.use('ggplot')
 
@@ -22,8 +22,20 @@ plt.scatter(all_red[:, 0], all_red[:, 1], c='r', marker='^', s=180)
 
 plt.xlabel('x coordinate (feature 1)')
 plt.ylabel('y coordinate (feature 2)')
+
+
+
+knn = cv.ml.KNearest_create()
+knn.train(train_data, cv.ml.ROW_SAMPLE, labels)
+
+newCase, _ = generate_data(1,2,2)
+
+plt.plot(newCase[0, 0], newCase[0, 1], 'go', markersize=14)
+
+print("New Case ",newCase)
+
+ret, results, neighbor, dist = knn.findNearest(newCase, 7)
+print("Predicted label:\t", results)
+print("Neighbor's label:\t", neighbor)
+print("Distance to neighbor:\t", dist)
 plt.show()
-
-
-knn = cv2.ml.KNearest_create
-knn.train(train_data, cv2.ml.ROW_SAMPLE, labels)
