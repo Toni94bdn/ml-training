@@ -1,8 +1,6 @@
 import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
-import sklearn.neighbors as skn
-#plt.style.use('ggplot')
 
 def generate_data(num_samples, num_coord , num_labels):
     #Randomly generates a number of data points.
@@ -24,8 +22,6 @@ plt.scatter(all_red[:, 0], all_red[:, 1], c='r', marker='^', s=180)
 plt.xlabel('x coordinate (feature 1)')
 plt.ylabel('y coordinate (feature 2)')
 
-
-
 knn = cv.ml.KNearest_create()
 knn.train(train_data, cv.ml.ROW_SAMPLE, labels)
 
@@ -40,11 +36,3 @@ print("Predicted label:\t", results)
 print("Neighbor's label:\t", neighbor)
 print("Distance to neighbor:\t", dist)
 plt.show()
-
-
-model = skn.KNeighborsClassifier(7)
-
-model.fit(train_data,labels)
-
-result = model.predict(newCase)
-print(result)
